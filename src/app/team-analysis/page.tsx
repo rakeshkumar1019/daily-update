@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import {z} from "zod";
 import { experimental_useObject as useObject } from "ai/react";
 import { Button } from "@/components/ui/button";
 
@@ -24,8 +25,11 @@ type Ticket = {
     tickets: Ticket[]
   }
 
+
+  
+
 export default function TeamAnalysisPage() {
-  const [prompt, setPrompt] = useState<TicketData>({
+  const [prompt] = useState<TicketData>({
     tickets: [
       {
         "ticketId": "WEBUI-1497",
@@ -564,7 +568,6 @@ export default function TeamAnalysisPage() {
       }
     ]
   })
-  const [analysisData, setAnalysisData] = useState<any>(null);
   const { object, submit, isLoading } = useObject({
     schema: teamAnalysisSchema,
     api: "/api/team-analysis", // Adjusted API path
@@ -624,7 +627,7 @@ export default function TeamAnalysisPage() {
         Analyze Team Data
       </Button>
       {isLoading && <h1>Loading....</h1>}
-      <TeamAnalysis teamAnalysisData={object as any}/>
+      <TeamAnalysis teamAnalysisData={object as z.infer<typeof teamAnalysisSchema> }/>
     </div>
   );
 }

@@ -46,7 +46,7 @@ const statusColors = {
 }
 
 export default function DailyUpdatesDashboard() {
-  const [data, setData] = useState<TicketData>({
+  const [data] = useState<TicketData>({
     tickets: [
       {
         "ticketId": "WEBUI-1497",
